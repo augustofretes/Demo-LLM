@@ -30,7 +30,10 @@ export default function RAG() {
         body: formData,
       });
 
-      if (!res.ok) throw new Error('Upload failed');
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Upload failed');
+      }
       
       setUploadStatus('Document processed successfully!');
     } catch (error) {
@@ -58,10 +61,14 @@ export default function RAG() {
       });
 
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'An error occurred while processing your query.');
+      }
       setResponse(data.response);
     } catch (error) {
       console.error('Error:', error);
-      setResponse('An error occurred while processing your query.');
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred while processing your query.';
+      setResponse(errorMessage);
     } finally {
       setLoading(false);
     }
