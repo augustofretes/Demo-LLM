@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@langchain/openai": "^0.5.11",
+    "@pinecone-database/doc-splitter": "^0.0.1",
     "@pinecone-database/pinecone": "^6.0.1",
     "langchain": "^0.3.27",
     "next": "15.3.3",
     "openai": "^5.0.1",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^1.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -21,6 +24,7 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pdf-parse": "^1.1.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
