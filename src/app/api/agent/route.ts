@@ -1,5 +1,5 @@
-import { OpenAI } from 'openai';
-import { NextResponse } from 'next/server';
+import { OpenAI } from 'openai'
+import { NextResponse } from 'next/server'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -34,7 +34,7 @@ const defineTwoStepPlanTool: OpenAI.Chat.Completions.ChatCompletionTool = {
       required: ["step1_name", "step1_description", "step2_name", "step2_description"]
     }
   }
-};
+}
 
 export async function POST(req: Request) {
   try {
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: 'Task is required' },
         { status: 400 }
-      );
+      )
     }
 
     // First, get the LLM to break down the task into steps
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
     });
 
     const message = planningCompletion.choices[0].message;
-    let plannedSteps: Array<{ name: string; description: string }> = [];
+    let plannedSteps: Array<{ name: string; description: string }> = []
 
     if (message.tool_calls && message.tool_calls.length > 0) {
       const toolCall = message.tool_calls[0];
@@ -82,21 +82,21 @@ export async function POST(req: Request) {
             throw new Error("Tool arguments are missing required fields: step1_name, step1_description, step2_name, step2_description.");
           }
         } catch (e: any) {
-          console.error("Failed to parse tool arguments or arguments invalid:", e.message);
+          console.error("Failed to parse tool arguments or arguments invalid:", e.message)
           return NextResponse.json(
             { error: `Failed to process planning tool arguments: ${e.message}` },
             { status: 500 }
           );
         }
       } else {
-         console.error("Expected tool 'define_two_step_plan' not called or wrong tool type. Called:", toolCall.function.name);
+         console.error("Expected tool 'define_two_step_plan' not called or wrong tool type. Called:", toolCall.function.name)
          return NextResponse.json(
             { error: "LLM did not use the 'define_two_step_plan' tool as expected." },
             { status: 500 }
         );
       }
     } else {
-      console.error("No tool calls found in planning response. Message content:", message.content);
+      console.error("No tool calls found in planning response. Message content:", message.content)
       return NextResponse.json(
         { error: 'LLM failed to generate a plan using the required tool. No tool_calls present.' },
         { status: 500 }
@@ -104,8 +104,8 @@ export async function POST(req: Request) {
     }
 
     // Execute each step
-    const executedSteps = [];
-    let context = '';
+    const executedSteps = []
+    let context = ''
 
     for (const step of plannedSteps) {
       const stepCompletion = await openai.chat.completions.create({
@@ -121,11 +121,11 @@ export async function POST(req: Request) {
           }
         ],
         temperature: 0.7,
-      });
+      })
 
       const stepResult = stepCompletion.choices[0].message.content;
       if (stepResult === null || stepResult === undefined) {
-        console.error(`Execution step "${step.name}" resulted in null or undefined content.`);
+        console.error(`Execution step "${step.name}" resulted in null or undefined content.`)
         return NextResponse.json(
             { error: `Execution of step "${step.name}" failed to produce content.` },
             { status: 500 }
@@ -138,7 +138,7 @@ export async function POST(req: Request) {
         action: `${step.name}: ${step.description}`,
         status: 'Completed',
         result: stepResult
-      });
+      })
     }
 
     // Generate final summary
@@ -155,18 +155,18 @@ export async function POST(req: Request) {
         }
       ],
       temperature: 0.7,
-    });
-    console.log(summaryCompletion.choices[0].message.content);
+    })
+    console.log(summaryCompletion.choices[0].message.content)
 
     return NextResponse.json({
       steps: executedSteps,
       result: summaryCompletion.choices[0].message.content
-    });
+    })
   } catch (error) {
-    console.error('Error in agent route:', error);
+    console.error('Error in agent route:', error)
     return NextResponse.json(
       { error: 'Failed to process task' },
       { status: 500 }
-    );
+    )
   }
 } 
