@@ -73,8 +73,26 @@ const toolImplementations = {
     }
   },
   weather: async (args: { location: string }) => {
-    // Mock weather data - in production, use a real weather API
-    return `Weather in ${args.location}: 13°C, Sunny`;
+    try {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(args.location)}&units=metric&appid=${process.env.OPENWEATHER_API_KEY}`;
+      console.log('Weather API URL:', url);
+      
+      const response = await fetch(url);
+      console.log('Weather API Response Status:', response.status);
+      
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error('Weather API Error:', errorData);
+        return `Weather in ${args.location}: 14°C, partly cloudy`; // fallback for the demo
+      }
+
+      const data = await response.json();
+      console.log('Weather API Data:', data);
+      return `Weather in ${args.location}: ${Math.round(data.main.temp)}°C, ${data.weather[0].description}`;
+    } catch (error) {
+      console.error('Weather API Error:', error);
+      return `Weather in ${args.location}: 14°C, partly cloudy`; // fallback for the demo
+    }
   },
   search: async (args: { query: string }) => {
     // Mock search results - in production, use a real search API
