@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 export default function Agent() {
   const [task, setTask] = useState('');
@@ -86,7 +87,13 @@ export default function Agent() {
                 </div>
                 <p className="font-medium mb-2">{step.action}</p>
                 {step.result && (
-                  <p className="text-sm text-gray-600">{step.result}</p>
+                  <ReactMarkdown 
+                    components={{
+                      p: ({node, ...props}) => <p className="text-sm text-gray-600" {...props} />
+                    }}
+                  >
+                    {step.result}
+                  </ReactMarkdown>
                 )}
               </div>
             ))}
@@ -98,7 +105,13 @@ export default function Agent() {
         <div className="mt-8">
           <h2 className="text-xl font-semibold mb-4">Final Result</h2>
           <div className="bg-gray-50 p-4 rounded-lg">
-            <p className="whitespace-pre-wrap">{finalResult}</p>
+            <ReactMarkdown 
+              components={{
+                p: ({node, ...props}) => <p className="whitespace-pre-wrap" {...props} />
+              }}
+            >
+              {finalResult}
+            </ReactMarkdown>
           </div>
         </div>
       )}
