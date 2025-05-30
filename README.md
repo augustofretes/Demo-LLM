@@ -70,7 +70,7 @@ npm run dev
 
 ### RAG
 - Navigate to the RAG page
-- Upload a document using the file input (didn't properly finish the pdf parsing, so stick to txt files, my b)
+- Upload a document using the file input (didn't finish the pdf parsing, so stick to simple text files, my b)
 - Wait for the document to be processed
 - Ask questions about the document content
 
