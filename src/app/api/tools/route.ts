@@ -74,11 +74,27 @@ const toolImplementations = {
   },
   weather: async (args: { location: string }) => {
     // Mock weather data - in production, use a real weather API
-    return `Weather in ${args.location}: 72°F, Sunny`;
+    return `Weather in ${args.location}: 13°C, Sunny`;
   },
   search: async (args: { query: string }) => {
     // Mock search results - in production, use a real search API
-    return `Search results for "${args.query}": [Sample result 1, Sample result 2]`;
+    const mockResults = [
+      { title: "Understanding Async/Await in JavaScript", url: "https://example.com/async-await-js", snippet: "A comprehensive guide to asynchronous programming in JavaScript using async/await." },
+      { title: "Top 10 JavaScript Frameworks in 2024", url: "https://example.com/js-frameworks-2024", snippet: "An overview of the most popular JavaScript frameworks and libraries this year." },
+      { title: "CSS Grid vs. Flexbox: Which to Choose?", url: "https://example.com/css-grid-flexbox", snippet: "Comparing CSS Grid and Flexbox for layout design, with examples and use cases." },
+      { title: "Getting Started with TypeScript", url: "https://example.com/typescript-guide", snippet: "A beginner-friendly introduction to TypeScript, its features, and how to use it in your projects." },
+      { title: "The Importance of Web Accessibility (a11y)", url: "https://example.com/web-accessibility", snippet: "Learn why web accessibility is crucial and how to build more inclusive web applications." }
+    ];
+
+    // Return 1 to 3 random results
+    const numResults = Math.floor(Math.random() * 3) + 1;
+    const shuffledResults = mockResults.sort(() => 0.5 - Math.random());
+    const selectedResults = shuffledResults.slice(0, numResults);
+
+    return JSON.stringify({
+      query: args.query,
+      results: selectedResults
+    });
   }
 };
 
