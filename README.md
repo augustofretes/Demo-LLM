@@ -60,24 +60,20 @@ npm run dev
 ## Usage
 
 ### Basic LLM
-- Navigate to the Basic LLM page
 - Enter your prompt in the text area
 - Click "Send" to get a response
 
 ### RAG
-- Navigate to the RAG page
 - Upload a document using the file input (didn't finish the pdf parsing, so stick to simple text files, my b)
 - Wait for the document to be processed
 - Ask questions about the document content
 
 ### Tool Calling
-- Navigate to the Tools page
 - Enter a request that requires tool usage
 - Watch as the system uses appropriate tools
 - View the step-by-step execution
 
 ### Agent Loops
-- Navigate to the Agent page
 - Enter a complex task
 - Observe the task breakdown and execution
 - Review the final summary
