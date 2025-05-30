@@ -83,7 +83,7 @@ const toolImplementations = {
       if (!response.ok) {
         const errorData = await response.text()
         console.error('Weather API Error:', errorData)
-        return `Weather in ${args.location}: 14°C, partly cloudy` // fallback for the demo
+        return `Weather in ${args.location} is not available`
       }
 
       const data = await response.json()
@@ -91,7 +91,7 @@ const toolImplementations = {
       return `Weather in ${args.location}: ${Math.round(data.main.temp)}°C, ${data.weather[0].description}`
     } catch (error) {
       console.error('Weather API Error:', error)
-      return `Weather in ${args.location}: 14°C, partly cloudy` // fallback for the demo
+      return `Weather in ${args.location} is not available`
     }
   },
   search: async (args: { query: string }) => {
