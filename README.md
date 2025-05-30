@@ -36,11 +36,7 @@ A Next.js application demonstrating various LLM capabilities including basic int
 
 ## Setup
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd demo-llm
-```
+1. Clone the repository.
 
 2. Install dependencies:
 ```bash
