@@ -70,7 +70,7 @@ npm run dev
 
 ### RAG
 - Navigate to the RAG page
-- Upload a document using the file input
+- Upload a document using the file input (didn't properly finish the pdf parsing, so stick to txt files, my b)
 - Wait for the document to be processed
 - Ask questions about the document content
 
@@ -94,7 +94,3 @@ npm run dev
 - Tailwind CSS
 - OpenAI API
 - Pinecone Vector Database
-
-## Contributing
-
-Feel free to submit issues and enhancement requests!
