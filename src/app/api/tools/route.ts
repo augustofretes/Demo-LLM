@@ -107,7 +107,7 @@ export async function POST(req: Request) {
 
     while (true) {
       const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o-mini",
         messages,
         tools,
         tool_choice: "auto",

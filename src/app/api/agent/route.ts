@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
     // First, get the LLM to break down the task into steps
     const planningCompletion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
     for (const step of steps) {
       const stepCompletion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
 
     // Generate final summary
     const summaryCompletion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
